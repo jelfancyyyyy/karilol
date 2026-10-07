@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Para Karina</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --noche:#1a1626; --noche2:#241d33; --papel:#f5f1e8; --tinta:#e9e4f2;
+    --suave:#a99fc0; --cinta:rgba(190,170,230,.55);
+  }
+  *{box-sizing:border-box;margin:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:radial-gradient(ellipse at 50% 0%,var(--noche2),var(--noche) 70%) fixed;
+    color:var(--tinta);font-family:'Newsreader',Georgia,serif;
+    font-size:1.2rem;line-height:1.8;overflow-x:hidden;
+  }
+  .portada{min-height:100svh;display:grid;place-content:center;text-align:center;padding:2rem}
+  .portada h1{font-family:'Caveat',cursive;font-weight:700;font-size:clamp(3.2rem,12vw,6rem);line-height:1}
+  .portada p{color:var(--suave);font-style:italic;margin-top:1rem}
+  .portada span{display:block;margin-top:2.5rem;color:var(--suave);animation:flota 2s ease-in-out infinite}
+  @keyframes flota{50%{transform:translateY(8px)}}
+
+  .carta{max-width:34rem;margin:0 auto;padding:0 1.5rem 6rem}
+  .carta p.texto{margin:0 0 2.5rem}
+  .carta p.texto:first-of-type::first-letter{font-family:'Caveat',cursive;font-size:3.4rem;line-height:.8;float:left;padding:.25rem .5rem 0 0}
+
+  figure.polaroid{
+    position:relative;width:min(16rem,78%);margin:0 auto 3.5rem;
+    background:var(--papel);padding:.8rem .8rem 0;
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+    transform:rotate(var(--giro,-3deg)) translateY(40px);opacity:0;
+    transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .6s;
+  }
+  figure.polaroid.in{transform:rotate(var(--giro,-3deg));opacity:1}
+  figure.polaroid::before{ /* cinta */
+    content:"";position:absolute;top:-.9rem;left:50%;width:4.5rem;height:1.5rem;
+    background:var(--cinta);transform:translateX(-50%) rotate(-4deg);
+  }
+  .foto{aspect-ratio:1/1;background:#111;overflow:hidden;position:relative}
+  .foto img{width:100%;height:100%;object-fit:cover;display:block;
+    filter:brightness(0) contrast(.6) blur(6px);
+    transition:filter 4s ease-out .4s}
+  figure.in .foto img{filter:none}
+  .foto.vacia{background:linear-gradient(135deg,#6f5d94,#c58fa8)}
+  .foto.vacia img{display:none}
+  figcaption{font-family:'Caveat',cursive;font-weight:500;font-size:1.5rem;line-height:1;
+    color:#3a3250;text-align:center;padding:1rem 0 1.1rem;min-height:3.4rem}
+
+  @media (min-width:900px){
+    figure.polaroid.izq{margin-left:-11rem;margin-right:auto}
+    figure.polaroid.der{margin-right:-11rem;margin-left:auto}
+  }
+
+  .final{text-align:center;padding:3rem 1.5rem 7rem}
+  .final p{font-family:'Caveat',cursive;font-size:clamp(2rem,7vw,3rem);line-height:1.3}
+  .final small{display:block;margin-top:1.5rem;color:var(--suave);font-size:1.2rem}
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .portada span{animation:none}
+    figure.polaroid{transition:none;transform:rotate(var(--giro,-3deg));opacity:1}
+    .foto img{transition:none;filter:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="portada">
+  <h1>Para Karina</h1>
+</header>
+
+<main class="carta" id="carta"></main>
+
+<footer class="final">
+  <p>Te amo y siempre tendrás un lugar en mi corazón.</p>
+  <small>Gracias, Karina.</small>
+</footer>
+
+<script>
+/* ============ EDITA AQUÍ ============
+   Cada bloque = un párrafo + la foto que aparece debajo.
+   foto: ruta de tu imagen (ej: "fotos/foto1.jpg")
+   pie:  frase corta escrita a mano bajo la foto (puede quedar vacía "") */
+const BLOQUES = [
+  { texto: "Hola, mi niña. Sé que lo nuestro en este momento es algo complicado, y tal vez me odies o ya ni siquiera sientas algo por mí. Perdón por ser tan insistente con esto, pero realmente quiero que lo nuestro funcione.",
+    foto: "fotos/foto1.jpg", pie: "" },
+  { texto: "Todo este tiempo que no hemos hablado he pensado mucho en cómo nos tratábamos, y en cómo mis acciones fueron haciendo que la relación muriera poco a poco.",
+    foto: "fotos/foto2.jpg", pie: "" },
+  { texto: "Sé que un perdón no basta para enmendar todo lo malo que hice: cómo no decía lo que me pasaba, cómo no te hacía caso en las cosas que te molestaban, que en mi mente solo eran bromas y no pensaba que te molestaran de esa forma. Tu relación con tu familia estaba mal y, en vez de ayudarte y empatizar contigo, te daba más problemas con mis reacciones y actitudes. Te pido perdón por todo eso.",
+    foto: "fotos/foto3.jpg", pie: "" },
+  { texto: "Aunque sé que un perdón no es suficiente y que lo que realmente quieres son acciones, si pudieras, o al menos consideraras darme otra oportunidad, estaría muy agradecido. Sé que tal vez no la merezco, pero realmente te extraño.",
+    foto: "fotos/foto4.jpg", pie: "" },
+  { texto: "Extraño pasar esa ventana los lunes y miércoles contigo. Extraño abrazarte y darte besos, hablar contigo todos los días y poder contarte cosas de mi día, acompañarte a la estación para que te fueras a tu casa. Simplemente extraño poder estar en tu vida.",
+    foto: "fotos/foto5.jpg", pie: "" },
+  { texto: "Quiero volver a decirte «te amo» de frente, y no solo pensarlo todos los días, mirarte de lejos y esquivar tu mirada cuando estás frente a mí.",
+    foto: "fotos/foto6.jpg", pie: "" },
+  { texto: "La verdad es que desde ese día que hablamos antes de ensayar empecé a no poder concentrarme en nada. Todos los días eras todo lo que estaba en mi mente, y por más que intentara distraerme, siempre estabas en mi cabeza. Esto no es para que sientas pena ni nada parecido; es para que veas el efecto que tienes en mí.",
+    foto: "fotos/foto7.jpg", pie: "" },
+  { texto: "Me hubiera encantado poder bailar contigo, pero entiendo el porqué de ti y de tu mamá.",
+    foto: "fotos/foto8.jpg", pie: "" },
+  { texto: "Ya para ir terminando, quiero que sepas que obviamente esto no es para que te sientas presionada, ni mucho menos, y que lo que decidas después de esto estará bien. Sé que muchas de estas fotos no te gustan, pero es mi manera de poder estar contigo aunque estemos distanciados.",
+    foto: "fotos/foto9.jpg", pie: "" }
+];
+/* ============ FIN DE LA ZONA EDITABLE ============ */
+
+const giros = [-4, 3, -2, 4, -3, 2, -5, 3, -2];
+const carta = document.getElementById('carta');
+
+BLOQUES.forEach((b, i) => {
+  const p = document.createElement('p');
+  p.className = 'texto';
+  p.textContent = b.texto;
+  carta.appendChild(p);
+
+  const f = document.createElement('figure');
+  f.className = 'polaroid ' + (i % 2 ? 'der' : 'izq');
+  f.style.setProperty('--giro', giros[i % giros.length] + 'deg');
+
+  const marco = document.createElement('div');
+  marco.className = 'foto';
+  const img = new Image();
+  img.alt = b.pie || 'Foto ' + (i + 1);
+  img.loading = 'lazy';
+  img.onerror = () => marco.classList.add('vacia'); // si no existe la foto, muestra un marcador
+  img.src = b.foto;
+  marco.appendChild(img);
+
+  const cap = document.createElement('figcaption');
+  cap.textContent = b.pie;
+
+  f.append(marco, cap);
+  carta.appendChild(f);
+});
+
+const io = new IntersectionObserver((entradas) => {
+  entradas.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.35 });
+document.querySelectorAll('figure.polaroid').forEach(f => io.observe(f));
+</script>
+</body>
+</html>
